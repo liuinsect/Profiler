@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='GBK' ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+ 
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Append" value="true" />
+		<param name="file" value="E:/workspace/allTest/profiler/profiler-info.log" />
+		<param name="Encoding" value="UTF-8"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+  <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">  
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern"    
+                value="[%d{dd HH:mm:ss,SSS\} %-5p] [%t] %c{2\} - %m%n" />  
+        </layout>  
+        <!--过滤器设置输出的级别-->  
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">  
+            <param name="levelMin" value="debug" />  
+            <param name="levelMax" value="warn" />  
+            <param name="AcceptOnMatch" value="true" />  
+        </filter>  
+    </appender>  
+    
+	<logger name="InfoLogger"  additivity="false">
+    	<level value="INFO" />     
+        <appender-ref ref="FILE" />    
+	</logger>
+
+	<logger name="ProfilerLogger"  additivity="false">
+    	<level value="INFO" />     
+   	   <appender-ref ref="ConsoleAppender" />  
+	</logger>
+
+	<root>
+		<priority value="INFO" />
+		<appender-ref ref="ConsoleAppender" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</log4j:configuration>
