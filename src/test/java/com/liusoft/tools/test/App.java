@@ -1,7 +1,7 @@
 package com.liusoft.tools.test;
 
-import com.liusoft.tools.Profiler;
-import com.liusoft.tools.ProfilerCallBack;
+import com.liusoft.tools.profiler.Profiler;
+import com.liusoft.tools.profiler.ProfilerCallBack;
 import org.junit.Test;
 
 

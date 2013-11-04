@@ -1,6 +1,6 @@
 package com.liusoft.tools.test;
 
-import com.liusoft.tools.Profiler;
+import com.liusoft.tools.profiler.Profiler;
 import org.junit.Test;
 
 /**
