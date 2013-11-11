@@ -7,15 +7,7 @@ Version 3
 第三版，引入cglib实现对监控方法的透明织入
 
 使用方式：
-  <bean id="profilerSpringAOPSupport" class="com.liusoft.tools.profiler.AOPSupport.ProfilerSpringAOPSupport">
-        <property name="monitorMethod">
-            <map>
-                <entry key="aopSupportBean">
-                    <value>test1,test2,test3</value>   <!--声明  aopSupportBean 的 test，1,2,3方法加入监控-->
-                </entry>
-            </map>
-        </property>
-    </bean>
+
 
     <!-- 测试bean ： 普通的一个bean而已  -->
     <bean id="aopSupportBean" class="com.liusoft.tools.test.AOPSupportBean"/>
