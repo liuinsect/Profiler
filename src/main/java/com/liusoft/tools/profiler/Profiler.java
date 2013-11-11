@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
  * 监控方法运行时间工具类
  *
  * @author liukunyang
- * @version V1.0
- * @Package com.jd.jshop
+ * @version V3.0
+ * @Package com.liusoft
  * @date 2013-9-22 下午01:50:33
  */
 public class Profiler {
@@ -28,6 +28,7 @@ public class Profiler {
 
     /**
      *存放执行堆栈的情况，顺序是从调用层次最深，到条用层次最浅
+     * // threadlocal是否需要释放？？ thread 退出的时候会释放
      */
     private static ThreadLocal<List<InnerProfiler>> excuteResultMap = new ThreadLocal<List<InnerProfiler>>();
 
@@ -97,6 +98,8 @@ public class Profiler {
         InnerProfiler ip = stack.pop();
         ip.release();
         // ip.print();
+        //将当前弹出的对对象指向当前栈的栈顶，
+        //目的是保留调用信息
         if( stack.size()>0 ){
             InnerProfiler next = stack.elementAt(stack.size()-1);
             ip.next = next;
