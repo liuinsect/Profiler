@@ -8,7 +8,16 @@ Version 3
 
 使用方式：
 
-
+    <!--声明  aopSupportBean 的 test，1,2,3方法加入监控-->
+     <bean id="profilerSpringAOPSupport" class="com.liusoft.tools.profiler.AOPSupport.ProfilerSpringAOPSupport">
+          <property name="monitorMethod">
+              <map>
+                  <entry key="aopSupportBean">
+                      <value>test1,test2,test3</value>
+                  </entry>
+              </map>
+          </property>
+      </bean>
     <!-- 测试bean ： 普通的一个bean而已  -->
     <bean id="aopSupportBean" class="com.liusoft.tools.test.AOPSupportBean"/>
 
