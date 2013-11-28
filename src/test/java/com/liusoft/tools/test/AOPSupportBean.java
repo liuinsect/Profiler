@@ -1,5 +1,7 @@
 package com.liusoft.tools.test;
 
+import javax.annotation.Resource;
+
 /**
  * Created with IntelliJ IDEA.
  * User: liukunyang
@@ -8,6 +10,9 @@ package com.liusoft.tools.test;
  * To change this template use File | Settings | File Templates.
  */
 public class AOPSupportBean {
+
+
+    private  DependencyBean dependencyBean;
 
     public void test1() throws InterruptedException {
         System.out.println("进入业务方方法");
@@ -28,5 +33,9 @@ public class AOPSupportBean {
 
     public void test4() throws InterruptedException{
         Thread.sleep(400);
+    }
+
+    public void setDependencyBean(DependencyBean dependencyBean) {
+        this.dependencyBean = dependencyBean;
     }
 }

@@ -12,6 +12,12 @@
                      http://www.springframework.org/schema/context/spring-context.xsd"
 	default-autowire="byName">
 
+
+    <!-- ²âÊÔbean -->
+    <bean id="aopSupportBean" class="com.liusoft.tools.test.AOPSupportBean"/>
+    <bean id="dependencyBean" class="com.liusoft.tools.test.DependencyBean"/>
+
+
     <bean id="profilerSpringAOPSupport" class="com.liusoft.tools.profiler.AOPSupport.ProfilerSpringAOPSupport">
         <property name="monitorMethod">
             <map>
@@ -21,8 +27,5 @@
             </map>
         </property>
     </bean>
-
-    <!-- ²âÊÔbean -->
-    <bean id="aopSupportBean" class="com.liusoft.tools.test.AOPSupportBean"/>
 
 </beans>
