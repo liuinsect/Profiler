@@ -1,5 +1,9 @@
 package com.liusoft.tools.profiler.AOPSupport;
 
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +19,8 @@ import java.util.Map;
  */
 public class ProfilerSpringAOPSupport extends SpringBeanPostProcessor {
 
+    private ApplicationContext applicationContext;
+
     private Map<String,String[]> monitorMethod;
     private MonitorBeanFactory monitorBeanFactory = new MonitorBeanFactory();
 
@@ -26,7 +32,10 @@ public class ProfilerSpringAOPSupport extends SpringBeanPostProcessor {
 
     @Override
     protected Object replaceMonitorBean(Object bean, String beanName) {
-        return monitorBeanFactory.getInstance( bean.getClass() , monitorMethod.get(beanName) );
+        Object monitorBean =  monitorBeanFactory.getInstance( bean.getClass() , monitorMethod.get(beanName) );
+        applicationContext.getAutowireCapableBeanFactory().autowireBeanProperties(monitorBean, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME,false);
+
+        return monitorBean;
     }
 
     public void setMonitorMethod(Map monitorMethod) {
@@ -44,5 +53,11 @@ public class ProfilerSpringAOPSupport extends SpringBeanPostProcessor {
         }
 
         this.monitorMethod = newMonitorMethod;
+    }
+
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

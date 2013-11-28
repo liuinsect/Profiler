@@ -16,8 +16,9 @@ public class MonitorBeanFactory {
 
     public Object getInstance(Class proxyClass , String[] monitorMethod){
         Enhancer enhancer = new Enhancer();
+
         //进行代理
-        enhancer.setSuperclass(proxyClass);
+        enhancer.setSuperclass( proxyClass );
         enhancer.setCallback( new ProfilerCGLIBProxy() );
         enhancer.setCallbacks( new Callback[]{ NoOp.INSTANCE , new ProfilerCGLIBProxy() } );
         //生成代理实例

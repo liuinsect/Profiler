@@ -1,7 +1,11 @@
 package com.liusoft.tools.profiler.AOPSupport;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanPostProcessor;import java.lang.Object;import java.lang.Override;import java.lang.String;import java.lang.System;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+import java.lang.Object;import java.lang.Override;import java.lang.String;import java.lang.System;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +16,7 @@ import java.util.Map;
  * Time: 下午2:41
  * To change this template use File | Settings | File Templates.
  */
-public abstract class SpringBeanPostProcessor implements BeanPostProcessor{
+public abstract class SpringBeanPostProcessor implements BeanPostProcessor,ApplicationContextAware {
 
 
     @Override
