@@ -98,8 +98,8 @@ public class Profiler {
         InnerProfiler ip = stack.pop();
         ip.release();
         // ip.print();
-        //将当前弹出的对对象指向当前栈的栈顶，
-        //目的是保留调用信息
+        //将当前弹出的对象指向当前栈的栈顶，
+        //目的是保留调用信息  形成链表
         if( stack.size()>0 ){
             InnerProfiler next = stack.elementAt(stack.size()-1);
             ip.next = next;
@@ -121,7 +121,15 @@ public class Profiler {
 
     /**
      * 第二版特性，增加时间占用比例，因为堆栈的关系，
-     * list里面存放的顺序并不
+     * list里面存放的顺序并不一定正确
+     * 比如 A
+     *      -->B
+     *      -->C
+     * 如果直接使用list的话，顺序是 B-->C-->A (释放顺序)
+     * 但是真正的应该是 B-->A C-->A
+     * 这才能真正计算出B在A中所占的比例， C在A中所占的比例
+     *
+     * TODO 不使用list 而使用双向链表可否实现？
      * @param profilerList
      */
     private static void printTimeRate(List<InnerProfiler> profilerList){
