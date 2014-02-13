@@ -22,7 +22,6 @@ public class App
         try {
 			new App().call();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         Profiler.release();
@@ -37,7 +36,6 @@ public class App
 				try {
 					new App().call();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return null;
@@ -56,7 +54,6 @@ public class App
 				try {
 					new App().call();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return null;
@@ -74,7 +71,6 @@ public class App
                     try {
                         new App2().call();
                     } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                     return null;
