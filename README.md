@@ -7,6 +7,7 @@ v1.0.0
 支持多用统计格式，毫秒，纳秒等
 
 完整配置：
+
     <bean id="aopSupportBean2" class="com.liusoft.tools.test.AOPSupportBean"/>   <!--要监控哪个Bean-->
     <bean id="profilerNanos" class="com.liusoft.tools.profiler.AOPSupport.ProfilerSpringAOPSupport">
         <property name="monitorMethod">
