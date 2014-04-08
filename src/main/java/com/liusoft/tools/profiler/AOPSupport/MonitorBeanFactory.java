@@ -14,13 +14,13 @@ import net.sf.cglib.proxy.NoOp;
  */
 public class MonitorBeanFactory {
 
-    public Object getInstance(Class proxyClass , String[] monitorMethod){
+    public Object getInstance(Class proxyClass , String[] monitorMethod,String timeUnitName){
         Enhancer enhancer = new Enhancer();
 
         //进行代理
         enhancer.setSuperclass( proxyClass );
-        enhancer.setCallback( new ProfilerCGLIBProxy() );
-        enhancer.setCallbacks( new Callback[]{ NoOp.INSTANCE , new ProfilerCGLIBProxy() } );
+        //使用两个拦截器的原因是 有的方法不做监控，用空拦截器实现，做监控的用ProfilerCGLIBProxy实现，   ProfilerCallbackFilter 中返回的索引，确定用哪个拦截器
+        enhancer.setCallbacks( new Callback[]{ NoOp.INSTANCE , new ProfilerCGLIBProxy(timeUnitName) } );
         //生成代理实例
         enhancer.setCallbackFilter( new ProfilerCallbackFilter( monitorMethod ) );
         return enhancer.create();

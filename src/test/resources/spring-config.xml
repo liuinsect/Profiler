@@ -15,10 +15,8 @@
 
     <!-- 测试bean -->
     <bean id="aopSupportBean" class="com.liusoft.tools.test.AOPSupportBean"/>
-    <bean id="dependencyBean" class="com.liusoft.tools.test.DependencyBean"/>
 
-
-    <bean id="profilerSpringAOPSupport" class="com.liusoft.tools.profiler.AOPSupport.ProfilerSpringAOPSupport">
+    <bean id="profiler" class="com.liusoft.tools.profiler.AOPSupport.ProfilerSpringAOPSupport">
         <property name="monitorMethod">
             <map>
                 <entry key="aopSupportBean">
@@ -26,6 +24,32 @@
                 </entry>
             </map>
         </property>
+    </bean>
+
+
+    <bean id="aopSupportBean2" class="com.liusoft.tools.test.AOPSupportBean"/>
+    <bean id="profilerNanos" class="com.liusoft.tools.profiler.AOPSupport.ProfilerSpringAOPSupport">
+        <property name="monitorMethod">
+            <map>
+                <entry key="aopSupportBean2">
+                    <value>test1,test2,test3</value>   <!--声明  aopSupportBean 的 test，1,2,3方法加入监控-->
+                </entry>
+            </map>
+        </property>
+        <property name="timeUnit" value="MILLISECONDS"/>
+    </bean>
+
+
+    <bean id="aopSupportBean3" class="com.liusoft.tools.test.AOPSupportBean"/>
+    <bean id="profilerSec" class="com.liusoft.tools.profiler.AOPSupport.ProfilerSpringAOPSupport">
+        <property name="monitorMethod">
+            <map>
+                <entry key="aopSupportBean3">
+                    <value>test1,test2,test3</value>   <!--声明  aopSupportBean 的 test，1,2,3方法加入监控-->
+                </entry>
+            </map>
+        </property>
+        <property name="timeUnit" value="SECONDS"/>
     </bean>
 
 </beans>

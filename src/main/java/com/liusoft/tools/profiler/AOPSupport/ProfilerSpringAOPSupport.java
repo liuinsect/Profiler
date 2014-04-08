@@ -24,6 +24,8 @@ public class ProfilerSpringAOPSupport extends SpringBeanPostProcessor {
     private Map<String,String[]> monitorMethod;
     private MonitorBeanFactory monitorBeanFactory = new MonitorBeanFactory();
 
+    private String timeUnit = null;
+
 
     @Override
     public Map<String, String[]> getMonitorMethodMapping() {
@@ -32,7 +34,7 @@ public class ProfilerSpringAOPSupport extends SpringBeanPostProcessor {
 
     @Override
     protected Object replaceMonitorBean(Object bean, String beanName) {
-        Object monitorBean =  monitorBeanFactory.getInstance( bean.getClass() , monitorMethod.get(beanName) );
+        Object monitorBean =  monitorBeanFactory.getInstance( bean.getClass() , monitorMethod.get(beanName) , timeUnit );
         applicationContext.getAutowireCapableBeanFactory().autowireBeanProperties(monitorBean, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME,false);
 
         return monitorBean;
@@ -59,5 +61,9 @@ public class ProfilerSpringAOPSupport extends SpringBeanPostProcessor {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+    }
+
+    public void setTimeUnit(String timeUnit) {
+        this.timeUnit = timeUnit;
     }
 }

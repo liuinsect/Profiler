@@ -3,6 +3,7 @@ package com.liusoft.tools.profiler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
@@ -15,6 +16,11 @@ import org.apache.log4j.Logger;
  * @date 2013-9-22 下午01:50:33
  */
 public class Profiler {
+
+    public static TimeUnit millTimeUnit = TimeUnit.MILLISECONDS;
+
+
+    public static TimeUnit defaultTimeUnit = TimeUnit.NANOSECONDS;
 
     /**
      * 日志记录器 使用者必须声明一个叫ProfilerLogger的日志记录器。
@@ -45,7 +51,7 @@ public class Profiler {
      * @date 2013-9-22
      */
     public static void enter(ProfilerCallBack callback) {
-        Profiler.doEnter("");
+        Profiler.doEnter("",defaultTimeUnit);
         callback.excute();
         Profiler.release();
     }
@@ -56,7 +62,7 @@ public class Profiler {
      * @author liukunyang
      * @date 2013-9-22
      */
-    private static void doEnter(String msg) {
+    private static void doEnter(String msg,TimeUnit timeUnit) {
         StackTraceElement[] stArray = Thread.currentThread().getStackTrace();
 
         Stack<InnerProfiler> stack = threadMap.get();
@@ -66,7 +72,7 @@ public class Profiler {
             threadMap.set(stack);
         }
 
-        InnerProfiler ip = new InnerProfiler(stArray[pos],msg);//减去三次拿到Profiler外的真正的第一层调用情况不可能小3
+        InnerProfiler ip = new InnerProfiler(stArray[pos],msg,timeUnit);//减去三次拿到Profiler外的真正的第一层调用情况不可能小3
         stack.push(ip);
     }
 
@@ -77,11 +83,20 @@ public class Profiler {
      * @date 2013-9-22
      */
     public static void enter() {
-        doEnter("");
+        doEnter("",defaultTimeUnit);
     }
 
     public static void enter(String msg){
-        doEnter(msg);
+        doEnter(msg,defaultTimeUnit);
+    }
+
+
+    public static void enter(TimeUnit timeUnit) {
+        doEnter("",timeUnit);
+    }
+
+    public static void enter(String msg,TimeUnit timeUnit){
+        doEnter(msg,timeUnit);
     }
 
 
@@ -178,22 +193,23 @@ public class Profiler {
          */
         private String rateInfo;
 
+        private TimeUnit timeUnit;
 
 
 
-
-        public InnerProfiler(StackTraceElement st , String msg) {
+        public InnerProfiler(StackTraceElement st , String msg,TimeUnit timeUnit) {
             if (st == null) {
                 throw new RuntimeException("StackTraceElement is empty");
             }
             this.methodName = st.getMethodName();
             this.className = st.getClassName();
-            this.startTime = System.currentTimeMillis();
+            this.startTime = System.nanoTime();
             this.msg=msg;
+            this.timeUnit = timeUnit==null?defaultTimeUnit:timeUnit;
         }
 
         public void release() {
-            this.endTime = System.currentTimeMillis();
+            this.endTime = System.nanoTime();
         }
 
         public void print() {
@@ -204,14 +220,30 @@ public class Profiler {
             sb.append(",");
             sb.append(this.msg);
             sb.append("  take : ");
-            sb.append( (this.endTime - this.startTime) + "ms" );
+
+            sb.append( timeUnit.convert( endTime  - startTime,TimeUnit.NANOSECONDS ) +" "+ timeUnit.name() );
+
             sb.append("   ");
             sb.append(rateInfo);
             //TODO info 级别才打印，思考有没有更好的方式去展现。
             //比如拿到日志级别在确定怎么打印？
             log.info(sb);
+
         }
 
+    }
+
+    public static void main(String[] args) {
+
+        long startTime = System.nanoTime();
+
+        long endTime = System.nanoTime();
+
+        TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+        System.out.println(timeUnit.convert( endTime - startTime ,TimeUnit.NANOSECONDS ));
+
+        System.out.println(( endTime - startTime ));
+        System.out.println(( endTime - startTime )/1000000);
     }
 
 }
