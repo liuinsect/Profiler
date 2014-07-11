@@ -34,7 +34,13 @@ public class ProfilerSpringAOPSupport extends SpringBeanPostProcessor {
 
     @Override
     protected Object replaceMonitorBean(Object bean, String beanName) {
-        Object monitorBean =  monitorBeanFactory.getInstance( bean.getClass() , monitorMethod.get(beanName) , timeUnit );
+
+        //TODO 解决在bean没有空参数构造方法的情况
+        //应该依赖于bean的定义去实例化Bean还不是直接new
+
+        Object monitorBean =  monitorBeanFactory.getInstance(applicationContext,bean.getClass(),monitorMethod.get(beanName),beanName,timeUnit);
+
+
         applicationContext.getAutowireCapableBeanFactory().autowireBeanProperties(monitorBean, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME,false);
 
         return monitorBean;

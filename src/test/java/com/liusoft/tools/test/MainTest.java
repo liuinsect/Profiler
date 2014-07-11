@@ -32,6 +32,12 @@ public class MainTest extends BaseTest  {
         bean.test1();
     }
 
+    @Test
+    public void spring融合_无空构造函数_test() throws InterruptedException {
+        AOPSupportBean2 bean = (AOPSupportBean2) applicationContext.getBean("aopSupportBeanByCon");
+        bean.test1();
+    }
+
 
 
 }

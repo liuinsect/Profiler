@@ -43,7 +43,12 @@ public class ProfilerCallbackFilter implements CallbackFilter {
      * @return
      */
     private boolean isInArray(  String methodName ){
-       return  Arrays.binarySearch( this.monitorMethod , methodName ) >= 0 ? true :false;
+        for(String mm:monitorMethod){
+            if( mm.equals(methodName) ){
+                return true;
+            }
+        }
+        return  false;
     }
 
 }
