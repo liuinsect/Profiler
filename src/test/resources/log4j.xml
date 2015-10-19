@@ -6,7 +6,7 @@
 	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="DatePattern" value="'.'yyyy-MM-dd" />
 		<param name="Append" value="true" />
-		<param name="file" value="E:/workspace/allTest/profiler/profiler-info.log" />
+		<param name="file" value="/home/liukunyang/develop/logs/profiler/profiler-info.log" />
 		<param name="Encoding" value="UTF-8"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n" />

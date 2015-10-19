@@ -21,7 +21,7 @@ public class MainTest extends BaseTest  {
 
 
     @Test
-    public void Spring融合_毫秒级_test() throws InterruptedException {
+    public void Spring融合_纳秒级_test() throws InterruptedException {
         AOPSupportBean bean = (AOPSupportBean) applicationContext.getBean("aopSupportBean2");
         bean.test1();
     }

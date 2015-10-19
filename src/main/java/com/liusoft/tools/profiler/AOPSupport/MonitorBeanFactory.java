@@ -71,7 +71,7 @@ public class MonitorBeanFactory {
         Constructor[] constructors = proxyClass.getDeclaredConstructors();
         Constructor suitableConstructor = null;
         for(Constructor constructor : constructors){
-            if( valueHolderList.size() == constructor.getParameterCount() ){
+            if( valueHolderList.size() == constructor.getGenericParameterTypes().length ){
                 suitableConstructor = constructor;
                 break;
             }

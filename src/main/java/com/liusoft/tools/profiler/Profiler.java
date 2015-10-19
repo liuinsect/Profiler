@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
+import com.liusoft.tools.profiler.utils.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -17,10 +18,7 @@ import org.apache.log4j.Logger;
  */
 public class Profiler {
 
-    public static TimeUnit millTimeUnit = TimeUnit.MILLISECONDS;
-
-
-    public static TimeUnit defaultTimeUnit = TimeUnit.NANOSECONDS;
+    private  static  TimeUnit defaultTimeUnit = TimeUnit.MILLISECONDS;
 
     /**
      * 日志记录器 使用者必须声明一个叫ProfilerLogger的日志记录器。
@@ -95,7 +93,11 @@ public class Profiler {
         doEnter("",timeUnit);
     }
 
-    public static void enter(String msg,TimeUnit timeUnit){
+    public static void enter(String msg,String timeUnitName){
+        TimeUnit timeUnit = defaultTimeUnit;
+        if(StringUtils.isNotBlank(timeUnitName)){
+            timeUnit = TimeUnit.valueOf(timeUnitName);
+        }
         doEnter(msg,timeUnit);
     }
 
@@ -174,7 +176,7 @@ public class Profiler {
      * @Package com.jd.jshop
      * @date 2013-9-22 下午02:00:16
      */
-    static class InnerProfiler {
+    static  class InnerProfiler {
 
         private String methodName;
 
@@ -195,9 +197,7 @@ public class Profiler {
 
         private TimeUnit timeUnit;
 
-
-
-        public InnerProfiler(StackTraceElement st , String msg,TimeUnit timeUnit) {
+        public InnerProfiler(StackTraceElement st , String msg , TimeUnit timeUnit) {
             if (st == null) {
                 throw new RuntimeException("StackTraceElement is empty");
             }
@@ -205,7 +205,7 @@ public class Profiler {
             this.className = st.getClassName();
             this.startTime = System.nanoTime();
             this.msg=msg;
-            this.timeUnit = timeUnit==null?defaultTimeUnit:timeUnit;
+            this.timeUnit = timeUnit;
         }
 
         public void release() {
@@ -221,7 +221,7 @@ public class Profiler {
             sb.append(this.msg);
             sb.append("  take : ");
 
-            sb.append( timeUnit.convert( endTime  - startTime,TimeUnit.NANOSECONDS ) +" "+ timeUnit.name() );
+            sb.append( timeUnit.convert(endTime  - startTime,TimeUnit.NANOSECONDS) +" "+ timeUnit.name() );
 
             sb.append("   ");
             sb.append(rateInfo);
@@ -237,13 +237,19 @@ public class Profiler {
 
         long startTime = System.nanoTime();
 
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+
+        }
         long endTime = System.nanoTime();
 
         TimeUnit timeUnit = TimeUnit.MILLISECONDS;
-        System.out.println(timeUnit.convert( endTime - startTime ,TimeUnit.NANOSECONDS ));
-
-        System.out.println(( endTime - startTime ));
-        System.out.println(( endTime - startTime )/1000000);
+        System.out.println(timeUnit.convert( endTime - startTime ,TimeUnit.NANOSECONDS));
+//
+//        System.out.println(( endTime - startTime ));
+//        System.out.println(( endTime - startTime )/1000000);
     }
 
 }

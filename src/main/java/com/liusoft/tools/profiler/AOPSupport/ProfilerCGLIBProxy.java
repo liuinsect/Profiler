@@ -34,13 +34,8 @@ public class ProfilerCGLIBProxy implements MethodInterceptor {
 //        class com.liusoft.tools.test.AOPSupportBean$$EnhancerByCGLIB$$ef560001test3
         String proxyCalss = target.getClass().getName();
 
-        TimeUnit timeUnit = null;
-        try{
-            timeUnit = TimeUnit.valueOf(timeUnitName);
-        }catch (Exception e){
-        }
 
-        Profiler.enter(proxyCalss.split("\\$\\$")[0] + "." + method.getName(),timeUnit);
+        Profiler.enter(proxyCalss.split("\\$\\$")[0] + "." + method.getName(),timeUnitName);
 
         result = methodProxy.invokeSuper(target, methodParams);
         Profiler.release();
