@@ -1,50 +1,15 @@
-#################
-## Eclipse
-#################
-
-*.pydevproject
+*.DS_Store
+*.iml
+.idea
 .project
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
 .classpath
-.settings/
-.loadpath
 
-# External tool builders
-.externalToolBuilders/
+target/
 
-# Locally stored "Eclipse launch configurations"
-*.launch
+rebel.xml
+rebel-remote.xml
 
-# CDT-specific
-.cproject
+build.txt
 
-# PDT-specific
-.buildpath
-
-
-####maven ###
-
-target
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+node_modules/
+**.sass-cache**
